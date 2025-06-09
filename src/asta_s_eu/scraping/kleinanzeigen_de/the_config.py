@@ -27,7 +27,7 @@ SEARCH: dict[str, str] = json.loads(
     _CONFIG_DIR.joinpath("search.json").read_bytes()
 )
 
-_SEARCH_RULE = _CONFIG_DIR.joinpath("search_rule.ciur").read_bytes()
+_SEARCH_RULE = _CONFIG_DIR.joinpath("search_rule.ciur").read_text('utf-8')
 
 _RES_SEARCH = bnf_parser.external2dict(_SEARCH_RULE)
 CIUR_SEARCH_RULE = Rule.from_list(_RES_SEARCH)
