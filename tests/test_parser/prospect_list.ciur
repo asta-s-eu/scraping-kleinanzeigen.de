@@ -1,0 +1,26 @@
+body `//body` +1
+
+    prospect_list `//ul[@id='srchrslt-adtable' or @id='srchrslt-adtable-altads' or @id='page-searchresults-adtable']/li[not(contains(@class, 'is-topad')) and not(contains(@class, 'is-highlight'))]/article` +
+        location `.//i[contains(@class, "icon-pin")]` tail str.strip replace('\s+', ' ') +1
+        product_id `./@data-adid` +1
+        price `.//*[@class='aditem-main--middle--price-shipping--price']` text str.strip *1
+        text `.//div[@class='aditem-main--middle']//a[@class='ellipsis']/text() | .//div[@class='aditem-main--middle']//span[@data-url]/text()` +1
+        link `.//div[@class='aditem-main--middle']//a[@class='ellipsis']/@href | .//div[@class='aditem-main--middle']//span[@data-url]/@data-url` url +1
+        link0 `.//div[@class='aditem-main--middle']` raw *
+        img `.//div[@data-imgsrc]/@data-imgsrc | .//img[@srcset]/@src` *1
+
+        date `.//i[contains(@class, "icon-calendar-open")]` tail str.strip replace('\s+', ' ') *1
+        # TODO check why this did not work date css `.icon-calendar-open` text +1
+
+        tag_list `.//div[@class='aditem-main--bottom']/p/span[not(contains(@class, 'payment-badge'))]` text *
+
+        # TODO FIX THIS BUG: when no /text() is set
+        # location `.//i[contains(@class, "icon-pin")]` +1
+
+        # iraw `.` iraw +1
+
+        img_count `.//div[@class='galleryimage--counter']` text str.strip int *1
+
+        pro_href `.//div[@class='text-module-oneline']/a[1]/@href` *1
+
+    has_next_page `boolean(//a[@title='Nächste'])` *1
