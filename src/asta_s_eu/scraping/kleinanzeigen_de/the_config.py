@@ -17,17 +17,17 @@ _CONFIG_DIR = Path(
 )
 
 FOLLOW_PERSONS: dict[str, str] = json.loads(
-    _CONFIG_DIR.joinpath("follow_persons.json").read_text()
+    _CONFIG_DIR.joinpath("follow_persons.json").read_bytes()
 )
 IGNORE_PERSONS_BY_PRO_HREF: dict[str, str] = json.loads(
-    _CONFIG_DIR.joinpath("IGNORE_PERSONS_BY_PRO_HREF.json").read_text()
+    _CONFIG_DIR.joinpath("IGNORE_PERSONS_BY_PRO_HREF.json").read_bytes()
 )
 
 SEARCH: dict[str, str] = json.loads(
-    _CONFIG_DIR.joinpath("search.json").read_text()
+    _CONFIG_DIR.joinpath("search.json").read_bytes()
 )
 
-_SEARCH_RULE = _CONFIG_DIR.joinpath("search_rule.ciur").read_text()
+_SEARCH_RULE = _CONFIG_DIR.joinpath("search_rule.ciur").read_bytes()
 
 _RES_SEARCH = bnf_parser.external2dict(_SEARCH_RULE)
 CIUR_SEARCH_RULE = Rule.from_list(_RES_SEARCH)
