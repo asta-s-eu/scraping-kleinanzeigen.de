@@ -1,0 +1,37 @@
+{
+  "zip_label_value": {
+    "Schlieperstr 12": "13507",
+    "Hennigsdorfer Str. 130": "13503"
+  },
+
+  "value": {
+    "search_by_zip": {
+      "{zip_label}": "https://www.kleinanzeigen.de/s-{zip_value}/l3453r1"
+    },
+
+    "search_other_thing": {
+      "{zip} one plus 3": "https://www.kleinanzeigen.de/s-13507/one-plus-3/k0l3453r5",
+      "masa pentru bucatarie": "https://www.kleinanzeigen.de/s-kueche-esszimmer/13507/preis::150/esstisch/k0c86l3453"
+    },
+
+    "search_for_kids": {
+      "{zip} Zwillinge 5km": "https://www.kleinanzeigen.de/s-{zip}/zwillinge/k0l3453r5",
+      "{zip} Twin 5km": "https://www.kleinanzeigen.de/s-{zip}/twin/k0l3453r5",
+      "{zip} tiptoi": "https://www.kleinanzeigen.de/s-{zip}/tiptoi/k0l3453r5",
+      "lacata": "https://www.kleinanzeigen.de/s-fahrraeder/13507/schloss/k0c217l3453r5"
+
+    },
+
+    "search apartments": {
+      "tegel": "https://www.kleinanzeigen.de/s-wohnung-mieten/13507/anzeige:angebote/preis::2500/c203l3453r5+wohnung_mieten.qm_d:90%2C+wohnung_mieten.zimmer_d:3%2C",
+      "gradinita": "https://www.kleinanzeigen.de/s-wohnung-mieten/13503/anzeige:angebote/preis::2500/c203l26758r5+wohnung_mieten.qm_d:90%2C+wohnung_mieten.zimmer_d:3%2C",
+      "spital": "https://www.kleinanzeigen.de/s-wohnung-mieten/13467/anzeige:angebote/preis::2500/c203l3455+wohnung_mieten.qm_d:90%2C+wohnung_mieten.zimmer_d:3%2C"
+    },
+
+    "etc": {
+      "{zip} jägermeister": "https://www.kleinanzeigen.de/s-{zip}/j%C3%A4germeister/k0l3453r20",
+      "{zip} jack-daniels": "https://www.kleinanzeigen.de/s-{zip}/jack-daniels/k0l3453r20",
+      "{zip} warsteiner": "https://www.kleinanzeigen.de/s-{zip}/warsteiner/k0l3453r20"
+    }
+  }
+}

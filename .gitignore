@@ -2,7 +2,7 @@
 .coverage*
 build/
 *.egg-info/
-**/KLEINANZEIGEN_DE_CONFIG_FOLDER/
+tests/KLEINANZEIGEN_DE_CONFIG_FOLDER/
 .env
 *.iml
 __pycache__/

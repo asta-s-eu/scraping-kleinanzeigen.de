@@ -21,6 +21,7 @@ with mock.patch.dict('os.environ', {
     import asta_s_eu.scraping.kleinanzeigen_de
     import asta_s_eu.scraping.kleinanzeigen_de.ciur
 
+
 from asta_s_eu.scraping.core.prospect_database import Prospect
 
 MY_EBAY_K_ID = 79809801

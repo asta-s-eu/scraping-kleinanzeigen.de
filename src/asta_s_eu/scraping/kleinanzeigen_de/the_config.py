@@ -14,6 +14,8 @@ _CONFIG_DIR = Path(
     os.getenv('KLEINANZEIGEN_DE_CONFIG_FOLDER')
     or
     (Path(__file__).parent / '../../../../tests/KLEINANZEIGEN_DE_CONFIG_FOLDER')
+    or
+    (Path(__file__).parent / '../../../../tests/KLEINANZEIGEN_DE_CONFIG_FOLDER_SAMPLE')
 )
 
 FOLLOW_PERSONS: dict[str, str] = json.loads(
@@ -31,6 +33,7 @@ _SEARCH_RULE = _CONFIG_DIR.joinpath("search_rule.ciur").read_text('utf-8')
 
 _RES_SEARCH = bnf_parser.external2dict(_SEARCH_RULE)
 CIUR_SEARCH_RULE = Rule.from_list(_RES_SEARCH)
+
 
 __all__ = (
     'CIUR_SEARCH_RULE',
