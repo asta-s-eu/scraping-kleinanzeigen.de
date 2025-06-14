@@ -1,0 +1,102 @@
+[project]
+    name = "asta-s-eu-scraping-kleinanzeigen-de"
+    version = "0.0.3"
+    authors = [
+        {name = "Andrei Danciuc", email = "python.ciur@gmail.com"},
+    ]
+    license = "MIT"
+    dependencies = [
+        "asta-s-eu-scraping-core==0.0.4",
+    ]
+    requires-python = "== 3.13.2"
+
+[project.scripts]
+    "kleinanzeigen.de-follow-person" = "asta_s_eu.scraping.kleinanzeigen_de.ciur:follow_person"
+    "kleinanzeigen.de-search-all" = "asta_s_eu.scraping.kleinanzeigen_de.ciur:search_all"
+
+[project.optional-dependencies]
+    dev = [
+        # keep lines sorted
+        "asta-s-eu-scraping-core[dev]==0.0.4"
+    ]
+
+    otel = [
+        # keep lines sorted
+        "opentelemetry-distro",
+        "opentelemetry-exporter-otlp"
+    ]
+
+[tool.setuptools.packages.find]
+    where = ["src/"]
+    include = ["asta_s_eu.scraping.kleinanzeigen_de"]
+
+[tool.setuptools.package-data]
+    "asta_s_eu.scraping.kleinanzeigen_de" = [
+        "logging.yaml",
+        "py.typed",
+        "search_rule.ciur"
+    ]
+
+[tool.isort]
+    known_typing = "typing"
+    known_asta = "asta_s_eu"
+    known_localfolder = "src"
+    sections = ["FUTURE", "TYPING", "STDLIB", "FIRSTPARTY", "THIRDPARTY", "ASTA", "LOCALFOLDER"]
+
+[tool.coverage.run]
+    branch = true
+    data_file = ".coverage"
+    source = ["asta_s_eu.scraping.kleinanzeigen_de"]
+
+[tool.coverage.report]
+    fail_under = 57 # 75
+    show_missing = true
+    exclude_also = [
+        "pragma: no cover",
+        "pragma: deprecated",
+        "def __repr__",
+        "if self.debug:",
+        "if settings.DEBUG",
+        "raise AssertionError",
+        "raise NotImplementedError",
+        "if 0:",
+        "if __name__ == .__main__.:",
+        "class .*\\bProtocol\\):",
+        "@(abc\\.)?abstractmethod"
+    ]
+
+[tool.pytest.ini_options]
+    addopts = "--strict-markers -m 'not integration' -v"
+    markers = ["integration"]
+    testpaths = "tests"
+    filterwarnings = [
+        "error",
+        "ignore:.*module 'sre_constants' is deprecated",
+        "ignore:.*'urllib3.secure.' extra is deprecated and will be removed in a future release of urllib3 2.x.",
+        "ignore:.*'urllib3.contrib.pyopenssl' module is deprecated and will be removed in a future release of urllib3 2.x.",
+        "ignore:.*is deprecated and will be removed in urllib3 v2.1.0. Instead use HTTPResponse.headers.get",
+        "ignore:.*'cgi' is deprecated and slated for removal in Python 3.13",
+        "ignore:.*datetime.datetime.utcfromtimestamp.. is deprecated and scheduled for removal in a future version."
+    ]
+    log_level = "INFO"
+
+[tool.mypy]
+    python_version = "3.12"
+    strict = true
+    show_error_codes = true
+
+[[tool.mypy.overrides]]
+    module = "ciur.*"
+    ignore_missing_imports = true
+
+[tool.pylint.MISCELLANEOUS]
+# List of note tags to take in consideration, separated by a comma.
+notes = [
+    'FIXME',
+    'XXX',
+    # TODO
+]
+
+[tool.pylint.FORMAT]
+# Regexp for a line that is allowed to be longer than the limit.
+ignore-long-lines = '^\s*(# )?<?https?://\S+>?|.*https://.*$|# type: ignore\[|# pragma:'
