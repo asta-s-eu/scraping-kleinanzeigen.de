@@ -1,6 +1,6 @@
 [project]
     name = "asta-s-eu-scraping-kleinanzeigen-de"
-    version = "0.0.3"
+    version = "0.0.4"
     authors = [
         {name = "Andrei Danciuc", email = "python.ciur@gmail.com"},
     ]
