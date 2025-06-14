@@ -10,13 +10,33 @@ from ciur.rule import Rule
 
 PARSED_PAGES_LIMIT: int = 200
 
-_CONFIG_DIR = Path(
-    os.getenv('KLEINANZEIGEN_DE_CONFIG_FOLDER')
-    or
-    (Path(__file__).parent / '../../../../tests/KLEINANZEIGEN_DE_CONFIG_FOLDER')
-    or
-    (Path(__file__).parent / '../../../../tests/KLEINANZEIGEN_DE_CONFIG_FOLDER_SAMPLE')
-)
+def find_config_dir() -> Path:
+    """
+    Search for "config" in the following order of priority:
+    1. From the OS.
+    2. From the sample config directory.
+    3. From the Configuration directory.
+    """
+    directory = os.getenv('KLEINANZEIGEN_DE_CONFIG_FOLDER')
+    if directory:
+        path = Path(directory)
+        if not path.exists():
+            raise FileNotFoundError(f"Directory '{directory}' provided by "
+                                    f"env 'KLEINANZEIGEN_DE_CONFIG_FOLDER' not found")
+        return path
+
+    tests_directory = Path(__file__).parent / "../../../../tests"
+    path = tests_directory / "KLEINANZEIGEN_DE_CONFIG_FOLDER"
+    if path.exists():
+        return path
+
+    path = tests_directory / "KLEINANZEIGEN_DE_CONFIG_FOLDER_SAMPLE"
+    if path.exists():
+        return path
+
+    raise ValueError('No configuration directory found')
+
+_CONFIG_DIR = find_config_dir()
 
 FOLLOW_PERSONS: dict[str, str] = json.loads(
     _CONFIG_DIR.joinpath("follow_persons.json").read_bytes()
