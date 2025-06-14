@@ -11,7 +11,7 @@ on:
 
 env:
   ASTA_S_EU_SCRAPING_CORE_VERSION: 0.0.4
-  ASTA_S_EU_SCRAPING_KLEINANZEIGEN_DE_VERSION: 0.0.4
+  ASTA_S_EU_SCRAPING_KLEINANZEIGEN_DE_VERSION: 0.0.5
 
 jobs:
 
@@ -25,6 +25,7 @@ jobs:
           cache: 'pip' # caching pip dependencies
       - run: make update_pip_and_wheel install_dev
       - run: make coverage
+      - run: echo ${{ secrets.DOCKERHUB_USERNAME }} ${{ secrets.DOCKERHUB_TOKEN }}
 
   mypy:
     runs-on: ubuntu-latest
