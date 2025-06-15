@@ -10,8 +10,8 @@ on:
 
 
 env:
-  ASTA_S_EU_SCRAPING_CORE_VERSION: 0.0.4
-  ASTA_S_EU_SCRAPING_KLEINANZEIGEN_DE_VERSION: 0.0.8
+  ASTA_S_EU_SCRAPING_CORE_VERSION: 0.0.5
+  ASTA_S_EU_SCRAPING_KLEINANZEIGEN_DE_VERSION: 0.0.9
 
 jobs:
 
@@ -124,7 +124,7 @@ jobs:
           file: ./docker/prod/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: adan/asta-s-eu-sraping_core:${{ env.ASTA_S_EU_SCRAPING_KLEINANZEIGEN_DE_VERSION }}
+          tags: adan/asta-s-eu-sraping-kleinanzaigen:${{ env.ASTA_S_EU_SCRAPING_KLEINANZEIGEN_DE_VERSION }}
           build-args: |
             ASTA_S_EU_SCRAPING_CORE_VERSION=${{ env.ASTA_S_EU_SCRAPING_CORE_VERSION }}
             ASTA_S_EU_SCRAPING_KLEINANZEIGEN_DE_VERSION=${{ env.ASTA_S_EU_SCRAPING_KLEINANZEIGEN_DE_VERSION }}
