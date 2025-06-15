@@ -1,12 +1,12 @@
 [project]
     name = "asta-s-eu-scraping-kleinanzeigen-de"
-    version = "0.0.8"
+    version = "0.0.9"
     authors = [
         {name = "Andrei Danciuc", email = "python.ciur@gmail.com"},
     ]
     license = "MIT"
     dependencies = [
-        "asta-s-eu-scraping-core==0.0.4",
+        "asta-s-eu-scraping-core==0.0.5",
     ]
     requires-python = "== 3.13.2"
 
@@ -17,7 +17,7 @@
 [project.optional-dependencies]
     dev = [
         # keep lines sorted
-        "asta-s-eu-scraping-core[dev]==0.0.4"
+        "asta-s-eu-scraping-core[dev]==0.0.5"
     ]
 
     otel = [
