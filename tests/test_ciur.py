@@ -14,8 +14,8 @@ from _pytest.capture import CaptureFixture
 from ciur.exceptions import CiurBaseException
 
 with mock.patch.dict('os.environ', {
-    'ADA_EMAIL_FROM': 'some-value',
-    'ADA_EMAIL_PASSWORD': 'some-value'
+    'EMAIL_NOTIFICATION_FROM': 'some-value',
+    'EMAIL_NOTIFICATION_PASSWORD': 'some-value'
 
 }):
     import asta_s_eu.scraping.kleinanzeigen_de
