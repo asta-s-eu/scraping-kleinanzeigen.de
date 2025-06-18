@@ -11,7 +11,7 @@ on:
 
 env:
   ASTA_S_EU_SCRAPING_CORE_VERSION: 0.0.5
-  ASTA_S_EU_SCRAPING_KLEINANZEIGEN_DE_VERSION: 0.1.0
+  ASTA_S_EU_SCRAPING_KLEINANZEIGEN_DE_VERSION: 0.1.1
 
 jobs:
 
@@ -117,6 +117,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      - run: sleep 60 # sleep 60 allowing python package to be available
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
