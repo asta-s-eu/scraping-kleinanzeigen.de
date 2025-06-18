@@ -224,7 +224,8 @@ def config_parser(the_config: Dict[str, Any]) -> Iterable[Tuple[str, str]]:
 
 
 @catch_alarms(f"{WEB_SITE} - alarms",
-              LOG, ALARM_LOG, EMAIL_NOTIFICATION_FROM, EMAIL_NOTIFICATION_TO, EMAIL_NOTIFICATION_PASSWORD)
+              LOG, ALARM_LOG,
+              EMAIL_NOTIFICATION_FROM, EMAIL_NOTIFICATION_TO, EMAIL_NOTIFICATION_PASSWORD)
 def search_all() -> None:
     """
     Search by some predefined keywords and locations
@@ -311,7 +312,8 @@ def filter_prospects(
 
 
 @catch_alarms(f"{WEB_SITE} - follow person",
-              LOG, ALARM_LOG, EMAIL_NOTIFICATION_FROM, EMAIL_NOTIFICATION_TO, EMAIL_NOTIFICATION_PASSWORD)
+              LOG, ALARM_LOG,
+              EMAIL_NOTIFICATION_FROM, EMAIL_NOTIFICATION_TO, EMAIL_NOTIFICATION_PASSWORD)
 def follow_person() -> None:
     """
     Follow concrete persons on ebay-kleinanzeigen.de since they may have some valuable prospects
