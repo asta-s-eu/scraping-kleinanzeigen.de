@@ -21,7 +21,7 @@ from asta_s_eu.scraping.core.prospect_database.dynamo_db import \
     DynamoDB as ProspectDatabase
 from asta_s_eu.scraping.core.send_email import gmailing_prospects
 
-from . import GMAIL_TO, WEB_SITE
+from . import EMAIL_TO, WEB_SITE
 from . import irequests as requests
 from .the_config import (CIUR_SEARCH_RULE, FOLLOW_PERSONS,
                          IGNORE_PERSONS_BY_PRO_HREF, PARSED_PAGES_LIMIT,
@@ -31,17 +31,17 @@ from .typing import ProspectsResults
 
 def get_environments() -> Tuple[str, str]:
     """
-    Get mandatory environment, fail if case not find.
+    Get a mandatory environment, fail in case not finds.
     """
-    assert os.getenv("ADA_GMAIL_USER")
-    assert os.getenv("ADA_GMAIL_PASSWORD")
+    assert os.getenv("ADA_EMAIL_FROM")
+    assert os.getenv("ADA_EMAIL_PASSWORD")
     return (
-        cast(str, os.getenv("ADA_GMAIL_USER")),
-        cast(str, os.getenv("ADA_GMAIL_PASSWORD"))
+        cast(str, os.getenv("ADA_EMAIL_FROM")),
+        cast(str, os.getenv("ADA_EMAIL_PASSWORD"))
     )
 
 
-GMAIL_USER, GMAIL_PASSWORD = get_environments()
+EMAIL_FROM, EMAIL_PASSWORD = get_environments()
 
 LOG, ALARM_LOG = get_loggers(
     module_path=Path(__file__),
@@ -224,7 +224,7 @@ def config_parser(the_config: Dict[str, Any]) -> Iterable[Tuple[str, str]]:
 
 
 @catch_alarms(f"{WEB_SITE} - alarms",
-               LOG, ALARM_LOG, GMAIL_USER, GMAIL_TO, GMAIL_PASSWORD)
+              LOG, ALARM_LOG, EMAIL_FROM, EMAIL_TO, EMAIL_PASSWORD)
 def search_all() -> None:
     """
     Search by some predefined keywords and locations
@@ -249,17 +249,17 @@ def search_all() -> None:
 
         new_prospects = list(filter_prospects(db.capture(prospects), IGNORE_PERSONS_BY_PRO_HREF))
         LOG.info("Found %r new products, send email to %r with new records",
-                 len(new_prospects), GMAIL_TO)
+                 len(new_prospects), EMAIL_TO)
 
         LOG.info("Found %r new prospects from %r",
                  len(new_prospects), len(prospects_result))
 
         if new_prospects:
             gmailing_prospects(
-                GMAIL_USER,
-                GMAIL_TO,
+                EMAIL_FROM,
+                EMAIL_TO,
                 f"{WEB_SITE} - {query}",
-                GMAIL_PASSWORD,
+                EMAIL_PASSWORD,
                 new_prospects
             )
         else:
@@ -311,7 +311,7 @@ def filter_prospects(
 
 
 @catch_alarms(f"{WEB_SITE} - follow person",
-              LOG, ALARM_LOG, GMAIL_USER, GMAIL_TO, GMAIL_PASSWORD)
+              LOG, ALARM_LOG, EMAIL_FROM, EMAIL_TO, EMAIL_PASSWORD)
 def follow_person() -> None:
     """
     Follow concrete persons on ebay-kleinanzeigen.de since they may have some valuable prospects
@@ -335,15 +335,15 @@ def follow_person() -> None:
         new_prospects = list(filter_prospects(db.capture(prospects), IGNORE_PERSONS_BY_PRO_HREF))
 
         LOG.info("Found %r new products, send email to %r with new records",
-                 len(new_prospects), GMAIL_TO)
+                 len(new_prospects), EMAIL_TO)
         LOG.info("Found %r new prospects from %r", len(new_prospects), len(prospects))
 
         if new_prospects:
             gmailing_prospects(
-                GMAIL_USER,
-                GMAIL_TO,
+                EMAIL_FROM,
+                EMAIL_TO,
                 f"{WEB_SITE} - {query}",
-                GMAIL_PASSWORD,
+                EMAIL_PASSWORD,
                 new_prospects
             )
         else:

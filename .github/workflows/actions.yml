@@ -11,7 +11,7 @@ on:
 
 env:
   ASTA_S_EU_SCRAPING_CORE_VERSION: 0.0.5
-  ASTA_S_EU_SCRAPING_KLEINANZEIGEN_DE_VERSION: 0.0.9
+  ASTA_S_EU_SCRAPING_KLEINANZEIGEN_DE_VERSION: 0.1.0
 
 jobs:
 
@@ -71,7 +71,7 @@ jobs:
       - run: make pip-audit
 
   pypi_publish:
-    if: ${{ github.ref == 'refs/heads/release/0/0/latest' && github.event.pull_request.merged == true }}
+    if: ${{ github.ref == 'refs/heads/release/0/1/latest' && github.event.pull_request.merged == true }}
     needs:
       - coverage
       - pylint
@@ -124,7 +124,7 @@ jobs:
           file: ./docker/prod/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: adan/asta-s-eu-sraping-kleinanzaigen:${{ env.ASTA_S_EU_SCRAPING_KLEINANZEIGEN_DE_VERSION }}
+          tags: adan/asta-s-eu-sraping-kleinanzeigen:${{ env.ASTA_S_EU_SCRAPING_KLEINANZEIGEN_DE_VERSION }}
           build-args: |
             ASTA_S_EU_SCRAPING_CORE_VERSION=${{ env.ASTA_S_EU_SCRAPING_CORE_VERSION }}
             ASTA_S_EU_SCRAPING_KLEINANZEIGEN_DE_VERSION=${{ env.ASTA_S_EU_SCRAPING_KLEINANZEIGEN_DE_VERSION }}
