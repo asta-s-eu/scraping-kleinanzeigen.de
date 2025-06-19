@@ -37,7 +37,7 @@ def get_environments() -> Tuple[str, str]:
     assert os.getenv("EMAIL_NOTIFICATION_PASSWORD")
     return (
         cast(str, os.getenv("EMAIL_NOTIFICATION_FROM")),
-        cast(str, os.getenv("AEMAIL_NOTIFICATION_PASSWORD"))
+        cast(str, os.getenv("EMAIL_NOTIFICATION_PASSWORD"))
     )
 
 
