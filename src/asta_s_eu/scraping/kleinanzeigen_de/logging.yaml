@@ -43,5 +43,5 @@ loggers:
     propagate: no
 
 root:
-  level: DEBUG
+  level: INFO # DEBUG
   handlers: [console, file, alert]

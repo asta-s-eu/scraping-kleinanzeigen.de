@@ -10,8 +10,9 @@ on:
 
 
 env:
-  ASTA_S_EU_SCRAPING_CORE_VERSION: 0.0.5
-  ASTA_S_EU_SCRAPING_KLEINANZEIGEN_DE_VERSION: 0.1.2
+  ASTA_S_EU_SCRAPING_CORE_VERSION: 0.0.6
+  ASTA_S_EU_SCRAPING_KLEINANZEIGEN_DE_VERSION: 0.2.0
+  PIP_PACKAGE_NAME: asta-s-eu-scraping-kleinanzeigen-de
 
 jobs:
 
@@ -71,7 +72,7 @@ jobs:
       - run: make pip-audit
 
   pypi_publish:
-    if: ${{ github.ref == 'refs/heads/release/0/1/latest' && github.event.pull_request.merged == true }}
+    if: ${{ github.ref == 'refs/heads/release/0/2/latest' && github.event.pull_request.merged == true }}
     needs:
       - coverage
       - pylint
@@ -81,7 +82,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/p/ciur
+      url: https://pypi.org/p/$PIP_PACKAGE_NAME
     permissions:
       id-token: write
     steps:

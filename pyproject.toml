@@ -1,23 +1,22 @@
 [project]
     name = "asta-s-eu-scraping-kleinanzeigen-de"
-    version = "0.1.2"
+    version = "0.2.0"
     authors = [
         {name = "Andrei Danciuc", email = "python.ciur@gmail.com"},
     ]
     license = "MIT"
     dependencies = [
-        "asta-s-eu-scraping-core==0.0.5",
+        "asta-s-eu-scraping-core[otel]==0.0.6",
     ]
     requires-python = "== 3.13.2"
 
 [project.scripts]
-    "kleinanzeigen.de-follow-person" = "asta_s_eu.scraping.kleinanzeigen_de.ciur:follow_person"
-    "kleinanzeigen.de-search-all" = "asta_s_eu.scraping.kleinanzeigen_de.ciur:search_all"
+    "kleinanzeigen.de" = "asta_s_eu.scraping.kleinanzeigen_de.cli:cli"
 
 [project.optional-dependencies]
     dev = [
         # keep lines sorted
-        "asta-s-eu-scraping-core[dev]==0.0.5"
+        "asta-s-eu-scraping-core[dev,otel]==0.0.6"
     ]
 
     otel = [
@@ -49,7 +48,7 @@
     source = ["asta_s_eu.scraping.kleinanzeigen_de"]
 
 [tool.coverage.report]
-    fail_under = 57 # 75
+    fail_under = 60 # 75
     show_missing = true
     exclude_also = [
         "pragma: no cover",
