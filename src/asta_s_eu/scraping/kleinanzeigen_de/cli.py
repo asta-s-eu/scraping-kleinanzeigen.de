@@ -27,9 +27,9 @@ def cli() -> None :
         follow_person, search_all)
 
     if args.command == 'search-all':
-        follow_person()
-    elif args.command == 'follow-person':
         search_all()
+    elif args.command == 'follow-person':
+        follow_person()
 
 
 if __name__ == "__main__":
