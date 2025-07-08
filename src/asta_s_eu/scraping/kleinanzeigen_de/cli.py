@@ -1,5 +1,6 @@
 """Command line interface module"""
 import argparse
+
 from . import VERSION
 
 
@@ -22,7 +23,8 @@ def cli() -> None :
 
     args = parser.parse_args()
 
-    from .ciur import follow_person, search_all
+    from .ciur import (  # pylint: disable=import-outside-toplevel
+        follow_person, search_all)
 
     if args.command == 'search-all':
         follow_person()

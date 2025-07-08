@@ -20,8 +20,9 @@ from asta_s_eu.scraping.core.prospect_database.dynamo_db import \
     DynamoDB as ProspectDatabase
 from asta_s_eu.scraping.core.send_email import gmailing_prospects
 
-from .defaults import ALARM_LOG, EMAIL_NOTIFICATION_TO, WEB_SITE, get_environments
 from . import irequests as requests
+from .defaults import (ALARM_LOG, EMAIL_NOTIFICATION_TO, WEB_SITE,
+                       get_environments)
 from .the_config import (CIUR_SEARCH_RULE, FOLLOW_PERSONS,
                          IGNORE_PERSONS_BY_PRO_HREF, PARSED_PAGES_LIMIT,
                          SEARCH)

@@ -36,6 +36,9 @@ coverage_report:
 coverage_report_html:
 	coverage html
 
+coverage_report_xml:
+	coverage xml
+
 coverage: coverage_run coverage_report
 
 pytest_integration:

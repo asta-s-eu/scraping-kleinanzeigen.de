@@ -25,7 +25,13 @@ jobs:
           python-version-file: 'pyproject.toml'
           cache: 'pip' # caching pip dependencies
       - run: make update_pip_and_wheel install_dev
-      - run: make coverage
+      - run: make coverage coverage_report_xml
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: asta-s-eu/scraping-kleinanzeigen.de
 
   mypy:
     runs-on: ubuntu-latest
