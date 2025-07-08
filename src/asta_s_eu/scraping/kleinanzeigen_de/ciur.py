@@ -1,11 +1,10 @@
 """
 Ciur extension layer
 """
-from typing import (Any, Callable, Dict, Iterable, List, Optional, Sequence,
-                    Tuple, cast)
+from typing import Any, Callable, Iterable, Optional, Sequence, cast
 
 import datetime
-import os
+import logging
 import re
 from pathlib import Path
 
@@ -16,43 +15,29 @@ from ciur.models import Document
 from ciur.rule import ListOfT
 
 from asta_s_eu.scraping.core import CONFIG_DIR, catch_alarms
-from asta_s_eu.scraping.core.log import MakeRetryAsInfo, get_loggers
+from asta_s_eu.scraping.core.log import MakeRetryAsInfo
 from asta_s_eu.scraping.core.prospect_database.dynamo_db import \
     DynamoDB as ProspectDatabase
 from asta_s_eu.scraping.core.send_email import gmailing_prospects
 
-from . import EMAIL_NOTIFICATION_TO, WEB_SITE
 from . import irequests as requests
+from .defaults import (ALARM_LOG, EMAIL_NOTIFICATION_TO, WEB_SITE,
+                       get_environments)
 from .the_config import (CIUR_SEARCH_RULE, FOLLOW_PERSONS,
                          IGNORE_PERSONS_BY_PRO_HREF, PARSED_PAGES_LIMIT,
                          SEARCH)
 from .typing import ProspectsResults
 
+assert ALARM_LOG, "ALARM_LOG path is required in logging.yaml"
 
-def get_environments() -> Tuple[str, str]:
-    """
-    Get a mandatory environment, fail in case not finds.
-    """
-    assert os.getenv("EMAIL_NOTIFICATION_FROM")
-    assert os.getenv("EMAIL_NOTIFICATION_PASSWORD")
-    return (
-        cast(str, os.getenv("EMAIL_NOTIFICATION_FROM")),
-        cast(str, os.getenv("EMAIL_NOTIFICATION_PASSWORD"))
-    )
+
+LOG = logging.getLogger(__name__)
 
 
 EMAIL_NOTIFICATION_FROM, EMAIL_NOTIFICATION_PASSWORD = get_environments()
 
-LOG, ALARM_LOG = get_loggers(
-    module_path=Path(__file__),
-    logging_yaml=Path(__file__).parent / 'logging.yaml',
-    logger_name=WEB_SITE
-)
 
-assert ALARM_LOG, 'ALARM_LOG is mandatory'
-
-
-def _ciur_parse_html_type(response: requests.Response, ciur_rule: ListOfT) -> Dict[str, Any]:
+def _ciur_parse_html_type(response: requests.Response, ciur_rule: ListOfT) -> dict[str, Any]:
     assert response.status_code == 200, response.status_code
 
     document = Document(response)
@@ -86,7 +71,7 @@ class InvalidHtml(Exception):
    delay=120,
    logger=MakeRetryAsInfo(LOG.name, LOG.level)
 )
-def parse_page(url: str, web: requests.Session = requests.session()) -> Dict[str, Any]:
+def parse_page(url: str, web: requests.Session = requests.session()) -> dict[str, Any]:
     """
     Parse a search page, retry if fail to parse.
     """
@@ -135,7 +120,7 @@ def parse_page(url: str, web: requests.Session = requests.session()) -> Dict[str
                     datetime.datetime.now(datetime.UTC) - datetime.timedelta(days=1)
             ).strftime('%d.%m.%Y')
 
-    return cast(Dict[str, Any], web_data['body'])
+    return cast(dict[str, Any], web_data['body'])
 
 
 def find_next_url(url: str, page: int) -> str:
@@ -164,7 +149,7 @@ def find_next_url(url: str, page: int) -> str:
 
 
 def parse_a_search_page_until_n_captured(
-        parse: Callable[[str], Dict[str, Any]],
+        parse: Callable[[str], dict[str, Any]],
         start_url_page: str,
         db: ProspectDatabase,
         page_limit: int,
@@ -205,7 +190,7 @@ def parse_a_search_page_until_n_captured(
     return ProspectsResults(has_more=False, prospects=prospects)
 
 
-def config_parser(the_config: Dict[str, Any]) -> Iterable[Tuple[str, str]]:
+def config_parser(the_config: dict[str, Any]) -> Iterable[tuple[str, str]]:
     """
     Parse custom big config into smaller `query url` tuples
     """
@@ -213,7 +198,7 @@ def config_parser(the_config: Dict[str, Any]) -> Iterable[Tuple[str, str]]:
     for zip_label, zip_value in the_config["zip_label_value"].items():
         for _, value in the_config["value"].items():
             for query_, url_ in value.items():
-                kwargs: Dict[str, str] = {
+                kwargs: dict[str, str] = {
                     "zip": zip_value,
                     "zip_label": zip_label,
                     "zip_value": zip_value
@@ -268,8 +253,8 @@ def search_all() -> None:
 
 
 def filter_prospects(
-        prospects: Sequence[Dict[str, Any]],
-        ignore_persons_by_pro_href: Dict[str, str]) -> Iterable[Dict[str, Any]]:
+        prospects: Sequence[dict[str, Any]],
+        ignore_persons_by_pro_href: dict[str, str]) -> Iterable[dict[str, Any]]:
     """Custom filter for prospects"""
     switch_apartment = re.compile(r'(?i)(wohnungs| )tausch')
     for prospect in prospects:
@@ -281,7 +266,7 @@ def filter_prospects(
             LOG.info('Skip prospect by not set price')
             continue
 
-        tag_list: Optional[List[str]] = prospect.get('tag_list')
+        tag_list: Optional[list[str]] = prospect.get('tag_list')
         if tag_list:
             dhl_action = 'DHL Aktion'
             if dhl_action in tag_list:
@@ -355,5 +340,7 @@ def follow_person() -> None:
 
 
 __all__ = [
-    'ProspectDatabase'
+    'ProspectDatabase',
+    'follow_person',
+    'search_all',
 ]

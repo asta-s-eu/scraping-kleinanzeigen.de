@@ -1,5 +1,5 @@
 """
-Testing ciur module
+Testing ciur logic
 """
 from typing import Iterable
 

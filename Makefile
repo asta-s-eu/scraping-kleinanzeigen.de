@@ -11,9 +11,11 @@ update_pip_and_wheel:
 
 install_prod:
 	pip install  '.'
+	opentelemetry-bootstrap -a install
 
 install_dev:
-	pip install -e '.[dev,otel]'
+	pip install -e '.[dev]'
+	opentelemetry-bootstrap -a install
 
 wheel:
 	pip install build twine
@@ -34,6 +36,9 @@ coverage_report:
 coverage_report_html:
 	coverage html
 
+coverage_report_xml:
+	coverage xml
+
 coverage: coverage_run coverage_report
 
 pytest_integration:
@@ -45,12 +50,16 @@ mypy:
 pip-audit:
 	pip-audit --ignore-vuln=PYSEC-2022-42969
 
+markdownlint:
+	markdownlint .
+
 code_check: \
 	isort \
 	pylint \
 	coverage_run coverage_report \
 	mypy \
-	pip-audit
+	pip-audit \
+	markdownlint
 
 run:
 	$(CMD_CIUR_FOLLOW_PERSON) && $(CMD_CIUR_SEARCH_ALL)
